@@ -7,8 +7,10 @@
   cards: [
     {
       bgColor: '#ffffff',
-      desc: '地址：台北市信義區松勤路123號\n時間：2025/07/10 19:00-21:00\n人數：6/8\n費用：$300／人',
-      descColor: '#555555',
+      address: '台北市信義區松勤路123號',
+      time: '2025/07/10 19:00-21:00',
+      people: '6/8',
+      fee: '$300／人',
       image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
       link: 'https://goo.gl/maps/xxx',
       title: '松山運動中心羽球場',
@@ -30,8 +32,10 @@
     },
     {
       bgColor: '#ffffff',
-      desc: '地址：台中市西屯區健行路456號\n時間：2025/07/12 15:00-17:00\n人數：4/6\n費用：$250／人',
-      descColor: '#555555',
+      address: '台中市西屯區健行路456號',
+      time: '2025/07/12 15:00-17:00',
+      people: '4/6',
+      fee: '$250／人',
       image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b',
       link: 'https://goo.gl/maps/yyy',
       title: '台中巨蛋羽球場',
@@ -53,8 +57,10 @@
     },
     {
       bgColor: '#ffffff',
-      desc: '地址：高雄市鼓山區龍華路789號\n時間：2025/07/14 18:00-20:00\n人數：5/10\n費用：$200／人',
-      descColor: '#555555',
+      address: '高雄市鼓山區龍華路789號',
+      time: '2025/07/14 18:00-20:00',
+      people: '5/10',
+      fee: '$200／人',
       image: 'https://images.unsplash.com/photo-1464983953574-0892a716854b',
       link: 'https://goo.gl/maps/zzz',
       title: '高雄龍華羽球館',
@@ -76,8 +82,10 @@
     },
     {
       bgColor: '#ffffff',
-      desc: '地址：新北市新莊區幸福路101號\n時間：2025/07/15 19:00-22:00\n人數：8/12\n費用：$180／人',
-      descColor: '#555555',
+      address: '新北市新莊區幸福路101號',
+      time: '2025/07/15 19:00-22:00',
+      people: '8/12',
+      fee: '$180／人',
       image: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9',
       link: 'https://goo.gl/maps/aaa',
       title: '新莊幸福羽球館',
@@ -96,6 +104,6 @@
           text: '地圖',
         },
       ],
-    },
-  ],
+    }
+  ]
 }
