@@ -41,6 +41,7 @@ function renderCard(ctx) {
 
   // 結構化資訊欄位
   const infoRows = [
+    { icon: '🏸', label: '場地', text: card.courtNo || '', color: '#6d4c41' },
     { icon: '📍', label: '地點', text: card.address || '', color: '#388e3c' },
     { icon: '🕒', label: '時間', text: card.time || '', color: '#1976d2' },
     { icon: '👥', label: '人數', text: card.people || '', color: '#8d6e63' },
