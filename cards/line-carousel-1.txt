@@ -21,18 +21,17 @@ function gaScreenView (vcard) {
   })}`
 }
 function renderBtn(ctx) {
-  const { btn, vcard } = ctx
-  const uri = btn.link || DEFAULT_LINK
+  const { btn } = ctx
   return {
-    color: btn.color || (btn.style === 'primary' ? '#388e3c' : '#e0e0e0'),
-    height: btn.style === 'primary' ? 'md' : 'sm',
-    style: btn.style || 'primary',
-    margin: btn.style === 'link' ? 'md' : 'none',
-    type: 'button',
+    type: "button",
+    style: btn.style || "primary",
+    color: btn.color || "#43A047",
+    height: "sm",
+    flex: 1,
     action: {
-      label: btn.text || '預設按鈕文字',
-      type: 'uri',
-      uri,
+      label: btn.text || "按鈕",
+      type: "uri",
+      uri: btn.link,
     },
   }
 }
@@ -113,10 +112,10 @@ function renderCard(ctx) {
       ],
     },
     footer: {
-      backgroundColor: '#e8f5e9',
-      layout: 'horizontal',
-      spacing: 'sm',
-      type: 'box',
+      backgroundColor: "#e8f5e9",
+      layout: "horizontal",
+      spacing: "md",
+      type: "box",
       contents: _.map(card.btns, btn => renderBtn({ ...ctx, btn })),
     },
   }
