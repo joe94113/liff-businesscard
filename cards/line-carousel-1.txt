@@ -20,13 +20,14 @@ function gaScreenView (vcard) {
     v: 1, // api version
   })}`
 }
-function renderBtn (ctx) {
+function renderBtn(ctx) {
   const { btn, vcard } = ctx
   const uri = btn.link || DEFAULT_LINK
   return {
-    color: btn.color || '#17c950',
-    height: vcard.btnHeight || 'md',
+    color: btn.color || (btn.style === 'primary' ? '#388e3c' : '#e0e0e0'),
+    height: btn.style === 'primary' ? 'md' : 'sm',
     style: btn.style || 'primary',
+    margin: btn.style === 'link' ? 'md' : 'none',
     type: 'button',
     action: {
       label: btn.text || '預設按鈕文字',
@@ -35,11 +36,41 @@ function renderBtn (ctx) {
     },
   }
 }
-function renderCard (ctx) {
+function renderCard(ctx) {
   const { card, cardIdx, vcard } = ctx
   const uri = card.link || DEFAULT_LINK
+
+  // 更有層次的資訊顯示
+  const infoRows = [
+    {
+      icon: '📍', // 地址
+      label: '地點',
+      text: card.address || '',
+      color: '#388e3c',
+    },
+    {
+      icon: '🕒', // 時間
+      label: '時間',
+      text: card.time || '',
+      color: '#1976d2',
+    },
+    {
+      icon: '👥', // 人數
+      label: '人數',
+      text: card.people || '',
+      color: '#8d6e63',
+    },
+    {
+      icon: '💰', // 費用
+      label: '費用',
+      text: card.fee || '',
+      color: '#d84315',
+    }
+  ].filter(row => row.text)
+
   return {
     type: 'bubble',
+    size: 'mega',
     hero: {
       animated: true,
       aspectMode: 'cover',
@@ -53,53 +84,56 @@ function renderCard (ctx) {
       },
     },
     body: {
-      backgroundColor: card.bgColor || '#ffffff',
+      backgroundColor: card.bgColor || '#f5f5f5',
       layout: 'vertical',
       spacing: 'md',
       type: 'box',
-      action: {
-        type: 'uri',
-        uri,
-      },
       contents: [
         {
-          color: card.titleColor || '#000000',
-          size: vcard.titleSize || 'xl',
-          text: card.title,
           type: 'text',
+          text: card.title,
           weight: 'bold',
+          size: vcard.titleSize || 'xl',
           wrap: true,
+          color: card.titleColor || '#1b5e20',
+          margin: 'none',
         },
         {
-          color: card.descColor || '#000000',
-          size: vcard.descSize || 'sm',
-          text: card.desc,
-          type: 'text',
-          wrap: true,
+          type: 'separator',
+          margin: 'md'
         },
-        ...(cardIdx ? [] : [{
-          height: '1px',
-          layout: 'vertical',
-          offsetStart: '0px',
-          offsetTop: '0px',
-          position: 'absolute',
+        ...infoRows.map(row => ({
           type: 'box',
-          width: '1px',
-          contents: [{
-            align: 'center',
-            aspectMode: 'cover',
-            aspectRatio: '1:1',
-            gravity: 'center',
-            size: 'full',
-            type: 'image',
-            url: gaScreenView(vcard),
-          }],
-        }]),
+          layout: 'horizontal',
+          spacing: 'sm',
+          contents: [
+            {
+              type: 'text',
+              text: row.icon,
+              size: 'md',
+              flex: 0,
+              color: row.color
+            },
+            {
+              type: 'text',
+              text: `${row.label}：${row.text}`,
+              size: vcard.descSize || 'sm',
+              color: row.color,
+              flex: 4,
+              wrap: true,
+            }
+          ],
+          margin: 'sm',
+        })),
+        {
+          type: 'separator',
+          margin: 'md'
+        },
       ],
     },
     footer: {
-      backgroundColor: card.bgColor || '#ffffff',
-      layout: 'vertical',
+      backgroundColor: '#e8f5e9',
+      layout: 'horizontal',
       spacing: 'sm',
       type: 'box',
       contents: _.map(card.btns, btn => renderBtn({ ...ctx, btn })),
