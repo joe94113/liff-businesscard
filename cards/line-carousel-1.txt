@@ -37,36 +37,39 @@ function renderBtn(ctx) {
   }
 }
 function renderCard(ctx) {
-  const { card, cardIdx, vcard } = ctx
+  const { card, vcard } = ctx
   const uri = card.link || DEFAULT_LINK
 
-  // 更有層次的資訊顯示
+  // 結構化資訊欄位
   const infoRows = [
-    {
-      icon: '📍', // 地址
-      label: '地點',
-      text: card.address || '',
-      color: '#388e3c',
-    },
-    {
-      icon: '🕒', // 時間
-      label: '時間',
-      text: card.time || '',
-      color: '#1976d2',
-    },
-    {
-      icon: '👥', // 人數
-      label: '人數',
-      text: card.people || '',
-      color: '#8d6e63',
-    },
-    {
-      icon: '💰', // 費用
-      label: '費用',
-      text: card.fee || '',
-      color: '#d84315',
-    }
-  ].filter(row => row.text)
+    { icon: '📍', label: '地點', text: card.address || '', color: '#388e3c' },
+    { icon: '🕒', label: '時間', text: card.time || '', color: '#1976d2' },
+    { icon: '👥', label: '人數', text: card.people || '', color: '#8d6e63' },
+    { icon: '💰', label: '費用', text: card.fee || '', color: '#d84315' }
+  ].filter(row => row.text);
+
+  // fallback: desc 每行顯示
+  let infoContents = infoRows.length > 0
+    ? infoRows.map(row => ({
+        type: 'box',
+        layout: 'horizontal',
+        spacing: 'sm',
+        contents: [
+          { type: 'text', text: row.icon, size: 'md', flex: 0, color: row.color },
+          { type: 'text', text: `${row.label}：${row.text}`, size: vcard.descSize || 'sm', color: row.color, flex: 4, wrap: true }
+        ],
+        margin: 'sm',
+      }))
+    : (card.desc
+        ? card.desc.split('\n').map(line => ({
+            type: 'text',
+            text: line,
+            size: vcard.descSize || 'sm',
+            color: card.descColor || '#555555',
+            wrap: true,
+            margin: 'sm',
+          }))
+        : []);
 
   return {
     type: 'bubble',
@@ -102,29 +105,7 @@ function renderCard(ctx) {
           type: 'separator',
           margin: 'md'
         },
-        ...infoRows.map(row => ({
-          type: 'box',
-          layout: 'horizontal',
-          spacing: 'sm',
-          contents: [
-            {
-              type: 'text',
-              text: row.icon,
-              size: 'md',
-              flex: 0,
-              color: row.color
-            },
-            {
-              type: 'text',
-              text: `${row.label}：${row.text}`,
-              size: vcard.descSize || 'sm',
-              color: row.color,
-              flex: 4,
-              wrap: true,
-            }
-          ],
-          margin: 'sm',
-        })),
+        ...infoContents,
         {
           type: 'separator',
           margin: 'md'
